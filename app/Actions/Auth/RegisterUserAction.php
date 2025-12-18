@@ -9,7 +9,7 @@ class RegisterUserAction
 {
     public function __construct(
         private IssueAuthTokenAction $issueAuthTokenAction
-    ){}
+    ) {}
 
     public function execute($data)
     {
