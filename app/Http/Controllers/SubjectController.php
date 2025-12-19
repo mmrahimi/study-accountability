@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Subject\FetchAllSubjectsAction;
+use App\Actions\Subject\ShowSubjectAction;
 use App\Actions\Subject\StoreSubjectAction;
 use App\Actions\Subject\UpdateSubjectAction;
 use App\Http\Requests\StoreSubjectRequest;
@@ -28,10 +29,10 @@ class SubjectController extends Controller
         ], 201);
     }
 
-    public function show(Subject $subject)
+    public function show(Subject $subject, ShowSubjectAction $action)
     {
         return response()->json([
-            'subject' => new SubjectResource($subject),
+            'subject' => new SubjectResource($action->execute($subject)),
         ]);
     }
 
