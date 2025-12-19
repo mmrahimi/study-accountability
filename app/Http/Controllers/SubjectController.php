@@ -42,6 +42,7 @@ class SubjectController extends Controller
 
         return response()->json([
             'message' => 'Subject updated successfully',
+            'subject' => new SubjectResource($subject),
         ]);
     }
 
