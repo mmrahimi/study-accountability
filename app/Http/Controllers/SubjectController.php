@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Subject\DeleteSubjectAction;
 use App\Actions\Subject\FetchAllSubjectsAction;
 use App\Actions\Subject\ShowSubjectAction;
 use App\Actions\Subject\StoreSubjectAction;
@@ -46,8 +47,12 @@ class SubjectController extends Controller
         ]);
     }
 
-    public function destroy($id)
+    public function destroy(Subject $subject, DeleteSubjectAction $action)
     {
-        //
+        $action->execute($subject);
+
+        return response()->json([
+            'message' => 'Subject deleted successfully',
+        ]);
     }
 }
