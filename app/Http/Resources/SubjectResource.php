@@ -16,7 +16,7 @@ class SubjectResource extends JsonResource
     {
         return [
             'title' => $this->title,
-            'user' => new UserResource($this->user)
+            'user' => new UserResource($this->user),
         ];
     }
 }
