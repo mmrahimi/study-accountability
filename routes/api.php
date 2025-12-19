@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SubjectController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('auth')
@@ -9,3 +10,5 @@ Route::prefix('auth')
         Route::post('/login', [AuthController::class, 'login']);
         Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
     });
+
+Route::apiResource('subjects', SubjectController::class)->middleware('auth:sanctum');
