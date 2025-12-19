@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Subject\FetchAllSubjectsAction;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 
 class SubjectController extends Controller
@@ -19,9 +20,11 @@ class SubjectController extends Controller
         //
     }
 
-    public function show($id)
+    public function show(Subject $subject)
     {
-        //
+        return response()->json([
+            'subject' => $subject,
+        ]);
     }
 
     public function update(Request $request, $id)
