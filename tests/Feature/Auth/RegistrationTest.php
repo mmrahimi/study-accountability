@@ -1,11 +1,13 @@
 <?php
 
-test('new users can register', function () {
-    registerUser()->assertCreated();
-});
+describe('registration tests', function () {
+    it('registers new users', function () {
+        registerUser()->assertCreated();
+    });
 
-test('it issues a token on register', function () {
-    registerUser()->assertJsonStructure(['token']);
+    it('issues a token on register', function () {
+        registerUser()->assertJsonStructure(['token']);
+    });
 });
 
 function registerUser()
