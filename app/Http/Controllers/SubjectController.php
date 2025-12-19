@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Actions\Subject\FetchAllSubjectsAction;
 use App\Actions\Subject\StoreSubjectAction;
+use App\Actions\Subject\UpdateSubjectAction;
 use App\Http\Requests\StoreSubjectRequest;
+use App\Http\Requests\UpdateSubjectRequest;
 use App\Http\Resources\SubjectResource;
 use App\Models\Subject;
-use Illuminate\Http\Request;
 
 class SubjectController extends Controller
 {
@@ -34,9 +35,13 @@ class SubjectController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateSubjectRequest $request, Subject $subject, UpdateSubjectAction $action)
     {
-        //
+        $action->execute($subject, $request->validated());
+
+        return response()->json([
+            'message' => 'Subject updated successfully',
+        ]);
     }
 
     public function destroy($id)
