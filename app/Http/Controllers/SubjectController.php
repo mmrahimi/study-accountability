@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Subject\FetchAllSubjectsAction;
+use App\Http\Resources\SubjectResource;
 use App\Models\Subject;
 use Illuminate\Http\Request;
 
@@ -11,7 +12,7 @@ class SubjectController extends Controller
     public function index(FetchAllSubjectsAction $action)
     {
         return response()->json([
-            'subjects' => $action->execute(),
+            'subjects' => SubjectResource::collection($action->execute()),
         ]);
     }
 
@@ -23,7 +24,7 @@ class SubjectController extends Controller
     public function show(Subject $subject)
     {
         return response()->json([
-            'subject' => $subject,
+            'subject' => new SubjectResource($subject),
         ]);
     }
 
