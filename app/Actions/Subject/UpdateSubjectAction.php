@@ -6,6 +6,6 @@ class UpdateSubjectAction
 {
     public function execute($subject, $data)
     {
-        return $subject->update($data);
+        $subject->update($data);
     }
 }

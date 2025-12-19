@@ -6,7 +6,7 @@ class StoreSubjectAction
 {
     public function execute($user, $data)
     {
-        return $user->subjects()
+        $user->subjects()
             ->create($data);
     }
 }
