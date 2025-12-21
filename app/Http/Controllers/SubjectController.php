@@ -33,6 +33,8 @@ class SubjectController extends Controller
 
     public function show(Subject $subject, ShowSubjectAction $action)
     {
+        $this->authorize('view', $subject);
+
         return response()->json([
             'subject' => new SubjectResource($action->execute($subject)),
         ]);
@@ -40,6 +42,8 @@ class SubjectController extends Controller
 
     public function update(UpdateSubjectRequest $request, Subject $subject, UpdateSubjectAction $action)
     {
+        $this->authorize('update', $subject);
+
         $action->execute($subject, $request->validated());
 
         return response()->json([
@@ -50,6 +54,8 @@ class SubjectController extends Controller
 
     public function destroy(Subject $subject, DeleteSubjectAction $action)
     {
+        $this->authorize('delete', $subject);
+
         $action->execute($subject);
 
         return response()->json([
