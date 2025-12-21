@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Subject\DeleteSubjectAction;
-use App\Actions\Subject\FetchAllSubjectsAction;
+use App\Actions\Subject\FetchUserSubjectsAction;
 use App\Actions\Subject\ShowSubjectAction;
 use App\Actions\Subject\StoreSubjectAction;
 use App\Actions\Subject\UpdateSubjectAction;
@@ -11,13 +11,14 @@ use App\Http\Requests\StoreSubjectRequest;
 use App\Http\Requests\UpdateSubjectRequest;
 use App\Http\Resources\SubjectResource;
 use App\Models\Subject;
+use Illuminate\Http\Request;
 
 class SubjectController extends Controller
 {
-    public function index(FetchAllSubjectsAction $action)
+    public function index(Request $request, FetchUserSubjectsAction $action)
     {
         return response()->json([
-            'subjects' => SubjectResource::collection($action->execute()),
+            'subjects' => SubjectResource::collection($action->execute($request->user())),
         ]);
     }
 

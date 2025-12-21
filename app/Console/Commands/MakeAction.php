@@ -31,10 +31,10 @@ class MakeAction extends Command
         $className = array_pop($segments);
         $subPath = implode('/', $segments);
 
-        $directory = app_path('Actions/' . $subPath);
-        $path = $directory . "/{$className}.php";
+        $directory = app_path('Actions/'.$subPath);
+        $path = $directory."/{$className}.php";
 
-        $namespace = 'App\\Actions' . ($subPath ? '\\' . str_replace('/', '\\', $subPath) : '');
+        $namespace = 'App\\Actions'.($subPath ? '\\'.str_replace('/', '\\', $subPath) : '');
 
         if (! is_dir($directory)) {
             mkdir($directory, 0755, true);
