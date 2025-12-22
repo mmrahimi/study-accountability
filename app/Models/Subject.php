@@ -15,4 +15,9 @@ class Subject extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function commitments()
+    {
+        return $this->hasMany(Commitment::class, 'subject_id');
+    }
 }
