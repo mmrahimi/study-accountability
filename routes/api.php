@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommitmentController;
 use App\Http\Controllers\SubjectController;
 use Illuminate\Support\Facades\Route;
 
@@ -12,3 +13,5 @@ Route::prefix('auth')
     });
 
 Route::apiResource('subjects', SubjectController::class)->middleware('auth:sanctum');
+
+Route::apiResource('commitments', CommitmentController::class)->except('destroy')->middleware('auth:sanctum');
