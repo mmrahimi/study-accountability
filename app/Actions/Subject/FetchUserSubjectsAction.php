@@ -8,7 +8,6 @@ class FetchUserSubjectsAction
 {
     public function execute($user)
     {
-        return Subject::where('user_id', $user->id)
-            ->get();
+        return $user->subjects;
     }
 }
