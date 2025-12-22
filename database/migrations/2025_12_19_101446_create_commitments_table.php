@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('description')->nullable();
             $table->date('commitment_date');
-            $table->enum('status', ['pending', 'checked', 'missed']);
+            $table->enum('status', ['pending', 'checked', 'missed', 'canceled'])->default('pending');
             $table->timestamp('checked_at')->nullable();
             $table->timestamps();
         });
