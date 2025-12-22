@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Commitment;
 use App\Models\Subject;
+use App\Policies\CommitmentPolicy;
 use App\Policies\SubjectPolicy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Gate;
@@ -24,9 +26,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Model::automaticallyEagerLoadRelationships();
-
         Model::unguard();
 
         Gate::policy(Subject::class, SubjectPolicy::class);
+        Gate::policy(Commitment::class, CommitmentPolicy::class);
     }
 }

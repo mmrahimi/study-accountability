@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Commitment\FetchUserCommitmentsAction;
+use App\Actions\Commitment\ShowCommitmentAction;
 use App\Actions\Commitment\StoreCommitmentAction;
 use App\Http\Requests\FetchUserCommitmentsRequest;
 use App\Http\Requests\StoreCommitmentRequest;
 use App\Http\Resources\CommitmentResource;
+use App\Models\Commitment;
 use Illuminate\Http\Request;
 
 class CommitmentController extends Controller
@@ -27,9 +29,13 @@ class CommitmentController extends Controller
         ], 201);
     }
 
-    public function show(string $id)
+    public function show(Commitment $commitment, ShowCommitmentAction $action)
     {
-        //
+        $this->authorize('view', $commitment);
+
+        return response()->json([
+            'commitment' => new CommitmentResource($action->execute($commitment)),
+        ]);
     }
 
     public function update(Request $request, string $id)
