@@ -33,7 +33,7 @@ class StoreCommitmentAction
         }
     }
 
-    public function markExpiredCommitmentsAsMissed($user)
+    private function markExpiredCommitmentsAsMissed($user)
     {
         $user->commitments()
             ->where('status', 'pending')
