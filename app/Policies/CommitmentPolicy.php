@@ -21,4 +21,9 @@ class CommitmentPolicy
     {
         return $commitment->user_id == $user->id;
     }
+
+    public function check(User $user, Commitment $commitment)
+    {
+        return $commitment->user_id == $user->id;
+    }
 }

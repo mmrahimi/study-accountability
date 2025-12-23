@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Commitment\CancelCommitmentAction;
+use App\Actions\Commitment\CheckCommitmentAction;
 use App\Actions\Commitment\FetchUserCommitmentsAction;
 use App\Actions\Commitment\ShowCommitmentAction;
 use App\Actions\Commitment\StoreCommitmentAction;
@@ -60,6 +61,17 @@ class CommitmentController extends Controller
 
         return response()->json([
             'message' => 'Commitment canceled successfully',
+        ]);
+    }
+
+    public function check(Commitment $commitment, CheckCommitmentAction $action)
+    {
+        $this->authorize('check', $commitment);
+
+        $action->execute($commitment);
+
+        return response()->json([
+            'message' => 'Commitment checked successfully',
         ]);
     }
 }
