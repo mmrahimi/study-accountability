@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use App\Actions\Commitment\FetchUserCommitmentsAction;
 use App\Actions\Commitment\ShowCommitmentAction;
 use App\Actions\Commitment\StoreCommitmentAction;
+use App\Actions\Commitment\UpdateCommitmentAction;
 use App\Http\Requests\FetchUserCommitmentsRequest;
 use App\Http\Requests\StoreCommitmentRequest;
+use App\Http\Requests\UpdateCommitmentRequest;
 use App\Http\Resources\CommitmentResource;
 use App\Models\Commitment;
-use Illuminate\Http\Request;
 
 class CommitmentController extends Controller
 {
@@ -38,9 +39,16 @@ class CommitmentController extends Controller
         ]);
     }
 
-    public function update(Request $request, string $id)
+    public function update(UpdateCommitmentRequest $request, Commitment $commitment, UpdateCommitmentAction $action)
     {
-        //
+        $this->authorize('update', $commitment);
+
+        $action->execute($request->user(), $commitment, $request->validated());
+
+        return response()->json([
+            'message' => 'Commitment updated successfully',
+            'commitment' => new CommitmentResource($commitment),
+        ]);
     }
 
     public function cancel()
