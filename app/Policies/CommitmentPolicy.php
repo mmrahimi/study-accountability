@@ -17,7 +17,7 @@ class CommitmentPolicy
         return $commitment->user_id == $user->id;
     }
 
-    public function delete(User $user, Commitment $commitment)
+    public function cancel(User $user, Commitment $commitment)
     {
         return $commitment->user_id == $user->id;
     }

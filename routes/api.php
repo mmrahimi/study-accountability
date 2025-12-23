@@ -15,3 +15,4 @@ Route::prefix('auth')
 Route::apiResource('subjects', SubjectController::class)->middleware('auth:sanctum');
 
 Route::apiResource('commitments', CommitmentController::class)->except('destroy')->middleware('auth:sanctum');
+Route::post('commitments/{commitment}/cancel', [CommitmentController::class, 'cancel'])->middleware('auth:sanctum');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Commitment\CancelCommitmentAction;
 use App\Actions\Commitment\FetchUserCommitmentsAction;
 use App\Actions\Commitment\ShowCommitmentAction;
 use App\Actions\Commitment\StoreCommitmentAction;
@@ -51,8 +52,14 @@ class CommitmentController extends Controller
         ]);
     }
 
-    public function cancel()
+    public function cancel(Commitment $commitment, CancelCommitmentAction $action)
     {
-        //
+        $this->authorize('cancel', $commitment);
+
+        $action->execute($commitment);
+
+        return response()->json([
+            'message' => 'Commitment canceled successfully',
+        ]);
     }
 }
