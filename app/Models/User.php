@@ -52,4 +52,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Commitment::class, 'user_id');
     }
+
+    public function streak()
+    {
+        return $this->hasOne(Streak::class, 'user_id');
+    }
 }
