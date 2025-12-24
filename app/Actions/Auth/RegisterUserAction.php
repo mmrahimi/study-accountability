@@ -13,13 +13,9 @@ class RegisterUserAction
 
     public function execute($data)
     {
-        $user = User::create([
-            'first_name' => $data['first_name'],
-            'last_name' => $data['last_name'],
-            'username' => $data['username'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        $data['password'] = Hash::make($data['password']);
+
+        $user = User::create($data);
 
         return $this->issueAuthTokenAction->execute($user);
     }
