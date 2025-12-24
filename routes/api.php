@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommitmentController;
+use App\Http\Controllers\StreakController;
 use App\Http\Controllers\SubjectController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,3 +22,5 @@ Route::prefix('commitments')
         Route::post('/{commitment}/cancel', [CommitmentController::class, 'cancel']);
         Route::post('/{commitment}/check', [CommitmentController::class, 'check']);
     });
+
+Route::get('streak', [StreakController::class, 'show'])->middleware('auth:sanctum');

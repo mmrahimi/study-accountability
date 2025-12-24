@@ -2,7 +2,7 @@
 
 namespace App\Actions\Streak;
 
-class CreateUserStreakAction
+class CreateStreakAction
 {
     public function execute($user)
     {

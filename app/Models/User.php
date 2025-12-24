@@ -3,7 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Actions\Streak\CreateUserStreakAction;
+use App\Actions\Streak\CreateStreakAction;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -47,7 +47,7 @@ class User extends Authenticatable
     protected static function booted()
     {
         static::created(function ($user) {
-            app(CreateUserStreakAction::class)
+            app(CreateStreakAction::class)
                 ->execute($user);
         });
     }
