@@ -14,6 +14,10 @@ Route::prefix('auth')
 
 Route::apiResource('subjects', SubjectController::class)->middleware('auth:sanctum');
 
-Route::apiResource('commitments', CommitmentController::class)->except('destroy')->middleware('auth:sanctum');
-Route::post('commitments/{commitment}/cancel', [CommitmentController::class, 'cancel'])->middleware('auth:sanctum');
-Route::post('commitments/{commitment}/check', [CommitmentController::class, 'check'])->middleware('auth:sanctum');
+Route::prefix('commitments')
+    ->middleware('auth:sanctum')
+    ->group(function () {
+        Route::apiResource('', CommitmentController::class)->except('destroy');
+        Route::post('/{commitment}/cancel', [CommitmentController::class, 'cancel']);
+        Route::post('/{commitment}/check', [CommitmentController::class, 'check']);
+    });
