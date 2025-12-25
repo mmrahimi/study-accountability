@@ -8,11 +8,9 @@ class CreateCommitmentAction
 {
     public function execute($user, $data)
     {
-        $data['commitment_date'] = now()->toDateString();
-
-        $this->markExpiredCommitmentsAsMissed($user);
-
         $this->validate($user, $data);
+
+        $data['commitment_date'] = now()->toDateString();
 
         $user->commitments()
             ->create($data);
@@ -26,18 +24,10 @@ class CreateCommitmentAction
             ]);
         }
 
-        if ($user->commitments()->whereDate('commitment_date', now()->toDateString())->where('status', 'pending')->exists()) {
+        if ($user->commitments()->where('status', 'pending')->exists()) {
             throw ValidationException::withMessages([
-                'commitment' => 'You already have a pending commitment for today.',
+                'commitment' => 'You must resolve your current commitment first.',
             ]);
         }
-    }
-
-    private function markExpiredCommitmentsAsMissed($user)
-    {
-        $user->commitments()
-            ->where('status', 'pending')
-            ->whereDate('commitment_date', '<', now()->toDateString())
-            ->update(['status' => 'missed']);
     }
 }
