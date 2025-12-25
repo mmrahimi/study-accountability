@@ -4,7 +4,7 @@ namespace App\Actions\Commitment;
 
 use Illuminate\Validation\ValidationException;
 
-class StoreCommitmentAction
+class CreateCommitmentAction
 {
     public function execute($user, $data)
     {
