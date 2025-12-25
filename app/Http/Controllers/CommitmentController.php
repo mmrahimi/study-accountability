@@ -8,7 +8,9 @@ use App\Actions\Commitment\CreateCommitmentAction;
 use App\Actions\Commitment\FetchUserCommitmentsAction;
 use App\Actions\Commitment\ShowCommitmentAction;
 use App\Actions\Commitment\UpdateCommitmentAction;
+use App\Actions\SearchUserCommitmentsAction;
 use App\Http\Requests\FetchUserCommitmentsRequest;
+use App\Http\Requests\SearchUserCommitmentsRequest;
 use App\Http\Requests\StoreCommitmentRequest;
 use App\Http\Requests\UpdateCommitmentRequest;
 use App\Http\Resources\CommitmentResource;
@@ -20,6 +22,13 @@ class CommitmentController extends Controller
     {
         return response()->json([
             'commitments' => CommitmentResource::collection($action->execute($request->user(), $request->status)),
+        ]);
+    }
+
+    public function search(SearchUserCommitmentsRequest $request, SearchUserCommitmentsAction $action)
+    {
+        return response()->json([
+            'commitments' => CommitmentResource::collection($action->execute($request->user(), $request->term, $request->status)),
         ]);
     }
 

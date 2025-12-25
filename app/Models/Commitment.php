@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Commitment extends Model
 {
-    use HasFactory;
+    use HasFactory, Searchable;
 
     protected $table = 'commitments';
 
@@ -18,6 +19,14 @@ class Commitment extends Model
     public const STATUS_MISSED = 'missed';
 
     public const STATUS_CANCELED = 'canceled';
+
+    public function toSearchableArray()
+    {
+        return [
+            'title' => $this->title,
+            'description' => $this->description,
+        ];
+    }
 
     public function user()
     {

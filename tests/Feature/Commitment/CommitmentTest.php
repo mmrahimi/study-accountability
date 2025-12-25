@@ -50,6 +50,20 @@ describe('CRUD operation tests on subjects', function () {
             ->assertJsonStructure(['commitments']);
     });
 
+    it('searches user commitments by the given term', function () {
+        Commitment::factory()->create([
+            'title' => 'TITLE',
+            'description' => 'DESCRIPTION',
+            'user_id' => $this->user->id,
+            'subject_id' => $this->subject->id,
+        ]);
+
+        $this->getJson('/api/commitments/search?term=DESC')
+            ->assertOk()
+            ->assertJsonCount(1, 'commitments')
+            ->assertJsonPath('commitments.0.title', 'TITLE');
+    });
+
     it('checks a pending commitment', function () {
         $commitment = Commitment::factory()->create([
             'user_id' => $this->user->id,

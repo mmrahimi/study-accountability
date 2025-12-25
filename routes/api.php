@@ -15,13 +15,14 @@ Route::prefix('auth')
 
 Route::apiResource('subjects', SubjectController::class)->middleware('auth:sanctum');
 
-Route::apiResource('commitments', CommitmentController::class)->except('destroy')->middleware('auth:sanctum');
-
 Route::prefix('commitments')
     ->middleware('auth:sanctum')
     ->group(function () {
+        Route::get('/search', [CommitmentController::class, 'search']);
         Route::post('/{commitment}/cancel', [CommitmentController::class, 'cancel']);
         Route::post('/{commitment}/check', [CommitmentController::class, 'check']);
     });
+
+Route::apiResource('commitments', CommitmentController::class)->except('destroy')->middleware('auth:sanctum');
 
 Route::get('streak', [StreakController::class, 'show'])->middleware('auth:sanctum');
