@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Commitment;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class FetchUserCommitmentsRequest extends FormRequest
 {
@@ -22,7 +24,12 @@ class FetchUserCommitmentsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'status' => 'required|string|in:pending,checked,missed,canceled',
+            'status' => ['required', 'string', Rule::in([
+                Commitment::STATUS_PENDING,
+                Commitment::STATUS_CHECKED,
+                Commitment::STATUS_MISSED,
+                Commitment::STATUS_CANCELED,
+            ])],
         ];
     }
 }

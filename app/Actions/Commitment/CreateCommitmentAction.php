@@ -2,6 +2,7 @@
 
 namespace App\Actions\Commitment;
 
+use App\Models\Commitment;
 use Illuminate\Validation\ValidationException;
 
 class CreateCommitmentAction
@@ -24,7 +25,7 @@ class CreateCommitmentAction
             ]);
         }
 
-        if ($user->commitments()->where('status', 'pending')->exists()) {
+        if ($user->commitments()->where('status', Commitment::STATUS_PENDING)->exists()) {
             throw ValidationException::withMessages([
                 'commitment' => 'You must resolve your current commitment first.',
             ]);

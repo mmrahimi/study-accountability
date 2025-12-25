@@ -2,17 +2,19 @@
 
 namespace App\Actions\Streak;
 
+use App\Models\Commitment;
+
 class UpdateStreakAction
 {
     public function execute($user, $status)
     {
-        if ($status == 'missed') {
+        if ($status == Commitment::STATUS_MISSED) {
             $user->streak->update([
                 'current' => 0,
             ]);
         }
 
-        if ($status == 'checked') {
+        if ($status == Commitment::STATUS_CHECKED) {
             $streak = $user->streak;
 
             $streak->current += 1;

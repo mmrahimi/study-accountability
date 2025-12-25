@@ -3,6 +3,7 @@
 namespace App\Actions\Commitment;
 
 use App\Actions\Streak\UpdateStreakAction;
+use App\Models\Commitment;
 use Illuminate\Validation\ValidationException;
 
 class CheckCommitmentAction
@@ -16,23 +17,23 @@ class CheckCommitmentAction
         $this->validate($commitment);
 
         if ($commitment->commitment_date < now()->toDateString()) {
-            $commitment->update(['status' => 'missed']);
-            $this->updateStreakAction->execute($commitment->user, 'missed');
+            $commitment->update(['status' => Commitment::STATUS_MISSED]);
+            $this->updateStreakAction->execute($commitment->user, Commitment::STATUS_MISSED);
 
             return;
         }
 
         $commitment->update([
-            'status' => 'checked',
+            'status' => Commitment::STATUS_CHECKED,
             'checked_at' => now()->toDateTimeString(),
         ]);
 
-        $this->updateStreakAction->execute($commitment->user, 'checked');
+        $this->updateStreakAction->execute($commitment->user, Commitment::STATUS_CHECKED);
     }
 
     private function validate($commitment)
     {
-        if ($commitment->status != 'pending') {
+        if ($commitment->status != Commitment::STATUS_PENDING) {
             throw ValidationException::withMessages([
                 'commitment' => 'Only pending commitments can be checked.',
             ]);

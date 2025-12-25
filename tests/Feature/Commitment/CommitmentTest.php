@@ -23,7 +23,7 @@ describe('CRUD operation tests on subjects', function () {
 
         $this->assertDatabaseHas('commitments', [
             'user_id' => $this->user->id,
-            'status' => 'pending',
+            'status' => Commitment::STATUS_PENDING,
         ]);
     });
 
@@ -45,7 +45,7 @@ describe('CRUD operation tests on subjects', function () {
             'subject_id' => $this->subject->id,
         ]);
 
-        $this->getJson('/api/commitments?status=pending')
+        $this->getJson('/api/commitments?status='.Commitment::STATUS_PENDING)
             ->assertOk()
             ->assertJsonStructure(['commitments']);
     });
@@ -61,7 +61,7 @@ describe('CRUD operation tests on subjects', function () {
 
         $this->assertDatabaseHas('commitments', [
             'id' => $commitment->id,
-            'status' => 'checked',
+            'status' => Commitment::STATUS_CHECKED,
         ]);
     });
 
@@ -69,7 +69,7 @@ describe('CRUD operation tests on subjects', function () {
         $commitment = Commitment::factory()->create([
             'user_id' => $this->user->id,
             'subject_id' => $this->subject->id,
-            'status' => 'canceled',
+            'status' => Commitment::STATUS_CANCELED,
         ]);
 
         $this->postJson("/api/commitments/{$commitment->id}/check")
@@ -80,7 +80,6 @@ describe('CRUD operation tests on subjects', function () {
         $commitment = Commitment::factory()->create([
             'user_id' => $this->user->id,
             'subject_id' => $this->subject->id,
-            'status' => 'pending',
         ]);
 
         $this->postJson("/api/commitments/{$commitment->id}/cancel")
@@ -88,7 +87,7 @@ describe('CRUD operation tests on subjects', function () {
 
         $this->assertDatabaseHas('commitments', [
             'id' => $commitment->id,
-            'status' => 'canceled',
+            'status' => Commitment::STATUS_CANCELED,
         ]);
     });
 
