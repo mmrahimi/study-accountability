@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class StoreSubjectRequest extends FormRequest
+class LoginUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +22,8 @@ class StoreSubjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'max:255', Rule::unique('subjects')->where(fn ($q) => $q->where('user_id', auth()->id()))],
+            'username' => 'required|string|max:255',
+            'password' => 'required|string|min:6',
         ];
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions;
+namespace App\Actions\Commitment;
 
 use App\Models\Commitment;
 

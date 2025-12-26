@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Commitment;
 
+use App\Models\Commitment;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class UpdateCommitmentRequest extends FormRequest
+class SearchUserCommitmentsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +24,8 @@ class UpdateCommitmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'subject_id' => 'required|integer|exists:subjects,id',
-            'title' => 'required|string|min:3|max:255',
-            'description' => 'nullable|string|min:3|max:2000',
+            'term' => 'required|string|max:255',
+            'status' => ['nullable', 'string', Rule::in(Commitment::STATUSES)],
         ];
     }
 }

@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Commitment;
 
+use App\Models\Commitment;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdateSubjectRequest extends FormRequest
+class FetchUserCommitmentsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +23,8 @@ class UpdateSubjectRequest extends FormRequest
      */
     public function rules(): array
     {
-        $subject = $this->route('subject');
-
         return [
-            'title' => ['required', 'string', 'max:255', Rule::unique('subjects')->where(fn ($q) => $q->where('user_id', auth()->id()))->ignore($subject->id)],
+            'status' => ['required', 'string', Rule::in(Commitment::STATUSES)],
         ];
     }
 }
