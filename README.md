@@ -12,4 +12,6 @@ A tight Laravel API app for managing your commitments to study. In this project 
 - **Full-text search** using Laravel Scout
 - **Streak system** to track continuous commitment and reset when a session is missed
 
+<br>
+
 I may build a frontend for this in the future :)
