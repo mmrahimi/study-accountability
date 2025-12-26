@@ -24,12 +24,7 @@ class FetchUserCommitmentsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'status' => ['required', 'string', Rule::in([
-                Commitment::STATUS_PENDING,
-                Commitment::STATUS_CHECKED,
-                Commitment::STATUS_MISSED,
-                Commitment::STATUS_CANCELED,
-            ])],
+            'status' => ['required', 'string', Rule::in(Commitment::STATUSES)],
         ];
     }
 }

@@ -5,7 +5,7 @@ use App\Models\Subject;
 use App\Models\User;
 use Laravel\Sanctum\Sanctum;
 
-describe('CRUD operation tests on subjects', function () {
+describe('CRUD operation tests on commitments', function () {
     beforeEach(function () {
         $this->user = User::factory()->create();
         Sanctum::actingAs($this->user);

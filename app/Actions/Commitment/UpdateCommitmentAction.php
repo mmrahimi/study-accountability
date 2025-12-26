@@ -2,6 +2,8 @@
 
 namespace App\Actions\Commitment;
 
+use App\Models\Commitment;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Validation\ValidationException;
 
 class UpdateCommitmentAction
@@ -11,6 +13,10 @@ class UpdateCommitmentAction
         $this->validate($user, $data);
 
         $commitment->update($data);
+
+        foreach (Commitment::STATUSES as $status) {
+            Cache::forget("commitments:user:{$user->id}:status:{$status}");
+        }
     }
 
     private function validate($user, $data)

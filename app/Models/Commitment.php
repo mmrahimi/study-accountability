@@ -20,6 +20,13 @@ class Commitment extends Model
 
     public const STATUS_CANCELED = 'canceled';
 
+    public const STATUSES = [
+        self::STATUS_PENDING,
+        self::STATUS_CHECKED,
+        self::STATUS_MISSED,
+        self::STATUS_CANCELED,
+    ];
+
     public function toSearchableArray()
     {
         return [

@@ -25,12 +25,7 @@ class SearchUserCommitmentsRequest extends FormRequest
     {
         return [
             'term' => 'required|string|max:255',
-            'status' => ['nullable', 'string', Rule::in([
-                Commitment::STATUS_PENDING,
-                Commitment::STATUS_CHECKED,
-                Commitment::STATUS_MISSED,
-                Commitment::STATUS_CANCELED,
-            ])],
+            'status' => ['nullable', 'string', Rule::in(Commitment::STATUSES)],
         ];
     }
 }

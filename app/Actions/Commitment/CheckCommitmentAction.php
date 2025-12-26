@@ -4,6 +4,7 @@ namespace App\Actions\Commitment;
 
 use App\Actions\Streak\UpdateStreakAction;
 use App\Models\Commitment;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Validation\ValidationException;
 
 class CheckCommitmentAction
@@ -12,7 +13,7 @@ class CheckCommitmentAction
         private UpdateStreakAction $updateStreakAction
     ) {}
 
-    public function execute($commitment)
+    public function execute($user, $commitment)
     {
         $this->validate($commitment);
 
@@ -27,6 +28,10 @@ class CheckCommitmentAction
             'status' => Commitment::STATUS_CHECKED,
             'checked_at' => now()->toDateTimeString(),
         ]);
+
+        foreach (Commitment::STATUSES as $status) {
+            Cache::forget("commitments:user:{$user->id}:status:{$status}");
+        }
 
         $this->updateStreakAction->execute($commitment->user, Commitment::STATUS_CHECKED);
     }

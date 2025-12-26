@@ -15,6 +15,7 @@ use App\Http\Requests\StoreCommitmentRequest;
 use App\Http\Requests\UpdateCommitmentRequest;
 use App\Http\Resources\CommitmentResource;
 use App\Models\Commitment;
+use Illuminate\Http\Request;
 
 class CommitmentController extends Controller
 {
@@ -62,22 +63,22 @@ class CommitmentController extends Controller
         ]);
     }
 
-    public function cancel(Commitment $commitment, CancelCommitmentAction $action)
+    public function cancel(Request $request, Commitment $commitment, CancelCommitmentAction $action)
     {
         $this->authorize('cancel', $commitment);
 
-        $action->execute($commitment);
+        $action->execute($request->user(), $commitment);
 
         return response()->json([
             'message' => 'Commitment canceled successfully',
         ]);
     }
 
-    public function check(Commitment $commitment, CheckCommitmentAction $action)
+    public function check(Request $request, Commitment $commitment, CheckCommitmentAction $action)
     {
         $this->authorize('check', $commitment);
 
-        $action->execute($commitment);
+        $action->execute($request->user(), $commitment);
 
         return response()->json([
             'message' => 'Commitment checked successfully',
