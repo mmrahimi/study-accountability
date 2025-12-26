@@ -3,8 +3,8 @@
 namespace App\Actions\Auth;
 
 use App\Models\User;
-use DomainException;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class LoginUserAction
 {
@@ -24,7 +24,9 @@ class LoginUserAction
     private function validate($user, $password)
     {
         if (! $user || ! Hash::check($password, $user->password)) {
-            throw new DomainException('Invalid credentials.');
+            throw ValidationException::withMessages([
+                'username' => __('auth.failed'),
+            ]);
         }
     }
 }
