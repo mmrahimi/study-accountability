@@ -14,22 +14,17 @@ class LoginUserAction
 
     public function execute($data)
     {
-        $user = $this->findUser($data['username']);
+        $user = User::where('username', $data['username'])->first();
 
-        $this->ensurePasswordIsValid($data['password'], $user);
+        $this->validate($user, $data['password']);
 
         return $this->issueAuthTokenAction->execute($user);
     }
 
-    private function findUser($username)
+    private function validate($user, $password)
     {
-        return User::where('username', $username)->firstOrFail();
-    }
-
-    private function ensurePasswordIsValid($password, $user)
-    {
-        if (! Hash::check($password, $user->password)) {
-            throw new DomainException('Invalid credentials');
+        if (! $user || ! Hash::check($password, $user->password)) {
+            throw new DomainException('Invalid credentials.');
         }
     }
 }
