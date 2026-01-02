@@ -6,6 +6,7 @@ A tight Laravel API app for managing your commitments to study. In this project 
 - Implementing **advanced exception handling** for robust error management
 - Writing **feature tests for every part of the app** using Pest
 - Using **database caching** for high-load endpoints to optimize performance
+- Protecting routes with **rate limiting**
 
 ## 📦 Features
 - **Token-based authentication** powered by Laravel Sanctum
