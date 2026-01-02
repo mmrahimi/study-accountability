@@ -17,9 +17,7 @@ describe('CRUD operation tests on subjects', function () {
     });
 
     it('fetches a single subject', function () {
-        $subject = Subject::factory()->create([
-            'user_id' => $this->user->id,
-        ]);
+        $subject = Subject::factory()->for($this->user)->create();
 
         $this->getJson("/api/subjects/$subject->id")
             ->assertOk()
@@ -29,9 +27,7 @@ describe('CRUD operation tests on subjects', function () {
     it('cannot view another users subject', function () {
         $otherUser = User::factory()->create();
 
-        $subject = Subject::factory()->create([
-            'user_id' => $otherUser->id,
-        ]);
+        $subject = Subject::factory()->for($otherUser)->create();
 
         $this->getJson("/api/subjects/$subject->id")
             ->assertForbidden();
@@ -44,9 +40,7 @@ describe('CRUD operation tests on subjects', function () {
     });
 
     it('updates a subject', function () {
-        $subject = Subject::factory()->create([
-            'user_id' => $this->user->id,
-        ]);
+        $subject = Subject::factory()->for($this->user)->create();
 
         $this->putJson("/api/subjects/$subject->id", [
             'title' => 'UPDATE',
@@ -58,9 +52,7 @@ describe('CRUD operation tests on subjects', function () {
     it('cannot update another users subject', function () {
         $otherUser = User::factory()->create();
 
-        $subject = Subject::factory()->create([
-            'user_id' => $otherUser->id,
-        ]);
+        $subject = Subject::factory()->for($otherUser)->create();
 
         $this->putJson("/api/subjects/$subject->id", [
             'title' => 'TITLE',
@@ -68,9 +60,7 @@ describe('CRUD operation tests on subjects', function () {
     });
 
     it('deletes a subject', function () {
-        $subject = Subject::factory()->create([
-            'user_id' => $this->user->id,
-        ]);
+        $subject = Subject::factory()->for($this->user)->create();
 
         $this->deleteJson("/api/subjects/$subject->id")
             ->assertOk()
@@ -80,9 +70,7 @@ describe('CRUD operation tests on subjects', function () {
     it('cannot delete another users subject', function () {
         $otherUser = User::factory()->create();
 
-        $subject = Subject::factory()->create([
-            'user_id' => $otherUser->id,
-        ]);
+        $subject = Subject::factory()->for($otherUser)->create();
 
         $this->deleteJson("/api/subjects/$subject->id")
             ->assertForbidden();

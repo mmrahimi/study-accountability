@@ -8,7 +8,7 @@ use Laravel\Sanctum\Sanctum;
 it('creates a streak when user gets created', function () {
     $user = User::factory()->create();
 
-    expect($user->streak)->not()->toBeNull()
+    expect($user->streak)->not->toBeNull()
         ->and($user->streak->current)->toBe(0)
         ->and($user->streak->longest)->toBe(0);
 });
@@ -30,9 +30,7 @@ describe('streak update scenarios', function () {
         $this->user = User::factory()->create();
         Sanctum::actingAs($this->user);
 
-        $this->subject = Subject::factory()->create([
-            'user_id' => $this->user->id,
-        ]);
+        $this->subject = Subject::factory()->for($this->user)->create();
 
         $this->commitment = Commitment::factory()->create([
             'user_id' => $this->user->id,

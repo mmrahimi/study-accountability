@@ -10,9 +10,7 @@ describe('cache related tests on the commitment model', function () {
         $this->user = User::factory()->create();
         Sanctum::actingAs($this->user);
 
-        $this->subject = Subject::factory()->create([
-            'user_id' => $this->user->id,
-        ]);
+        $this->subject = Subject::factory()->for($this->user)->create();
     });
 
     it('caches user commitments by status on first fetch', function () {
